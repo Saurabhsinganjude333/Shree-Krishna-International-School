@@ -1,0 +1,37 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: skis_user
+      POSTGRES_PASSWORD: skis_password_change_me
+      POSTGRES_DB: skis_db
+    volumes:
+      - skis_db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  backend:
+    build: ./backend
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql://skis_user:skis_password_change_me@db:5432/skis_db
+      SECRET_KEY: change_this_to_a_long_random_secret_in_production
+      CORS_ORIGINS: http://localhost,http://localhost:80
+    depends_on:
+      - db
+    ports:
+      - "8000:8000"
+
+  frontend:
+    build: ./frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+
+volumes:
+  skis_db_data:

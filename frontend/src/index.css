@@ -1,0 +1,73 @@
+@import "tailwindcss";
+
+@theme {
+  /* ---- Color tokens, drawn from the school's own emblem ---- */
+  --color-ink: #0F2A4A;          /* deep navy - primary */
+  --color-ink-light: #1B3E66;
+  --color-marigold: #E8871E;     /* saffron/orange accent */
+  --color-marigold-dark: #C46F13;
+  --color-banyan: #1B7A4D;       /* green accent */
+  --color-banyan-dark: #145C3A;
+  --color-gold: #C9A227;         /* achievement gold */
+  --color-parchment: #FBF7EF;    /* warm page background */
+  --color-parchment-deep: #F3ECDC;
+  --color-slate: #1F2937;
+
+  --font-display: 'Fraunces', serif;
+  --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-parchment);
+  color: var(--color-slate);
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+/* Ledger / ruled-page motif used throughout for the syllabus tracker */
+.ledger-row {
+  background-image: linear-gradient(to right, transparent 0%, transparent 100%);
+  border-bottom: 1px dashed rgba(15, 42, 74, 0.18);
+}
+
+.dotted-leader {
+  flex: 1;
+  border-bottom: 1.5px dotted rgba(15, 42, 74, 0.35);
+  margin: 0 0.6rem;
+  height: 1px;
+  transform: translateY(-4px);
+}
+
+.stamp {
+  box-shadow: 0 0 0 2px rgba(255,255,255,0.9), 0 0 0 3px currentColor;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+::selection {
+  background-color: var(--color-marigold);
+  color: white;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-marigold);
+  outline-offset: 2px;
+}
