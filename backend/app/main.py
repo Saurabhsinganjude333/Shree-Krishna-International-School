@@ -5,6 +5,7 @@ from app.core.database import Base, engine
 from app.core.config import settings
 from app.models import models  # noqa: F401 ensures models are registered
 from app.routers import auth, academics, people, attendance, results, fees, admissions, content, dashboard
+from app.seed import run_seed
 
 Base.metadata.create_all(bind=engine)
 
@@ -13,6 +14,13 @@ app = FastAPI(
     description="Backend API powering the school website, syllabus tracker, and student/parent/teacher/admin portals.",
     version="1.0.0",
 )
+
+
+@app.on_event("startup")
+def seed_demo_data_on_startup():
+    # Idempotent — safe to run on every startup. Populates demo classes, syllabus,
+    # gallery/events/blog and demo accounts the first time; does nothing after that.
+    run_seed()
 
 app.add_middleware(
     CORSMiddleware,
